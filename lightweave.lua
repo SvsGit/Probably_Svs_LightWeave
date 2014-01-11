@@ -33,7 +33,7 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   
   { '115450', 'modifier.lalt', 'mouseover' }, -- Detox Mousever
   
-  { '!/targetenemy [noharm]', { '!target.alive', '!target.enemy', '!target.exists', }}, -- Autotarget
+  { '!/targetenemy [noharm]', { '!target.alive', '!target.enemy', '!target.exists' }}, -- Autotarget
   
   { '115203', 'player.health < 30' }, -- Fortifying Brew
   
