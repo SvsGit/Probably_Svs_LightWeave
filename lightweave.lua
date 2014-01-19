@@ -1,7 +1,8 @@
 -- ProbablyEngine Rotation Packager
 -- Custom Mistweaver Monk Rotation
 -- Created on Dec 31st 2013 9:16 am
--- Version 1.0.3
+-- Modified on Jan 19th 2014 5:45 pm
+-- Version 1.0.4
 
 ProbablyEngine.library.register('coreHealing', {
   needsHealing = function(percent, count)
@@ -31,14 +32,14 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   },
   { '115313', 'modifier.lshift', 'ground' }, -- Summon Jade Serpent Statue
   
-  { '115450', 'modifier.lalt', 'mouseover' }, -- Detox Mousever
+  { '!115450', 'modifier.lalt', 'mouseover' }, -- Detox Mousever
   
   { '!/targetenemy [noharm]', { '!target.alive', '!target.enemy', '!target.exists' }}, -- Autotarget
   
   { '115203', 'player.health < 30' }, -- Fortifying Brew
   
   -- Interrupt
-  { '116705', 'modifier.interrupts' }, -- Spear Hand Strike
+  { '116705', 'target.interruptAt(50)' }, -- Spear Hand Strike
   
   { '!/run UseItemByName(5512)', 'player.health < 30' }, -- Healthstone
   
@@ -47,26 +48,32 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '137562', 'player.state.root' },
   { '137562', 'player.state.snare' },
   { '137562', 'player.state.fear  ' },
+
+  -- Legendary Meta Support
+  { '!108557', { 'player.buff(137331)', 'target.spell(108557).range', '!modifier.last' }}, -- Jab
   
-  { '121279', 'spell.exists' }, -- Lifeblood
-  { '#gloves' }, 
-  
+  -- Mana management
+  { '!100787', { 'player.buff(139597)', 'target.spell(100787).range' }}, -- Tiger Palm/Muscle Memory
   { '123761', { 'player.buff(115867).count >= 2', 'player.mana <= 80' }}, -- Mana Tea
-  
+  { '108557', { 'target.spell(108557).range', 'player.mana <= 25', '!modifier.last' }}, -- Jab
+
+  { '121279', 'spell.exists' }, -- Lifeblood
+  { '#gloves' },
+  {"#trinket1", "player.mana < 80"},
+  {"#trinket2", "player.mana < 80"},
+    
   { '115080', { -- Touch of Death
     '!target.range > 5',
     'player.buff(121125)' -- Death Note
   }},
   
   -- Mouseover Healing
-  { '115175', { 'toggle.mouseover', 'mouseover.health < 100', '!mouseover.range > 40' }, 'mouseover' }, -- Soothing Mist
-  { '124682', { 'toggle.mouseover', 'player.casting(115175)', 'mouseover.health < 80', '!mouseover.range > 40' }, nil}, -- Enveloping Mist
-
-  -- CJL Stopcasting?
-  
+  {{
+  { '115175', { 'mouseover.health < 100', 'mouseover.spell(115175).range' }, 'mouseover' }, -- Soothing Mist 
+  }, 'toggle.mouseover' },
+    
   { '115310', { -- Revival
-  '@coreHealing.needsHealing(39, 4)', 
-  '!lowest.range > 40'
+  '@coreHealing.needsHealing(70, 4)', 
   }, 'lowest' },
   
   -- Life Cocoon
@@ -76,40 +83,38 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '116680', '@coreHealing.needsHealing(85, 3)' }, -- Thunder Focus Tea
   
   -- Uplift
-  { '116670', { 'player.chi >= 2', '@coreHealing.needsHealing(60, 4)' }, nil },
-  { '116670', { 'player.chi >= 5' }, nil }, -- , '@coreHealing.needsHealing(90, 3)'
+  { '!116670', { 'player.chi >= 2', '@coreHealing.needsHealing(70, 4)' }, nil },
+  { '116670', { 'player.chi >= 5' }, nil },
   
-  { '116847', { 'player.mana > 50', 'player.chi < 4', '@coreHealing.needsHealing(60, 4)' }, nil },  -- Rushing Jade Wind
+  { '116847', "modifier.multitarget" },  -- Rushing Jade Wind
   
-  { '123904', '@coreHealing.needsHealing(50, 4)' }, -- Invoke Xuen, the White Tiger
+  { '123904', '@coreHealing.needsHealing(60, 4)' }, -- Invoke Xuen, the White Tiger
   
   { '115151', { 'tank.health < 99', 'tank.spell(115151).range' }, 'tank' }, -- Renewing Mist
-  { '115151', 'player.chi < 5' }, -- Renewing Mist
   { '115151', { 'lowest.health < 99', '!lowest.buff(119611)', 'lowest.spell(115151).range' }, 'lowest' }, -- Renewing Mist
+  { '115151', 'player.chi < 5' }, -- Renewing Mist
   
-  { '115098', { '!player.buff(137331)', '!player.buff(139597)' }}, -- Chi Wave
+  { '115098', { 'lowest.health < 90', 'lowest.spell(115098).range' }, 'lowest'}, -- Chi Wave
   
-  { '115399', { '!player.buff(137331)', '!player.buff(139597)' }}, -- Chi Brew
+  { '115399', { '!player.buff(137331)', '!player.buff(139597)', '!modifier.last' }}, -- Chi Brew
   
   { '115072', { -- Expel Harm
     'player.health < 80',
     '!player.buff(137331)',
   }},
   
-  { '108557', { 'player.buff(137331)', '!player.buff(139597)', 'target.spell(108557).range' }}, -- Jab
-  { '108557', { 'player.buff(137331)', 'player.buff(139597)', 'player.chi < 1', 'target.spell(108557).range' }}, -- Jab
+  { '108557', { 'player.chi < 1', 'target.spell(108557).range' }}, -- Jab
   
-  { '100784', { '!player.buff(127722)', '!target.range > 5' }}, -- Blackout Kick/Serpent's Zeal
-  { '100784', { 'player.buff(127722).duration <= 2', '!target.range > 5' }}, -- Blackout Kick/Serpent's Zeal
+  { '100784', { '!player.buff(127722)', 'target.spell(108557).range' }}, -- Blackout Kick/Serpent's Zeal
+  { '100784', { 'player.buff(127722).duration <= 2', 'target.spell(108557).range' }}, -- Blackout Kick/Serpent's Zeal
   
-  { '100787', { '!player.buff(125359)', '!target.range > 5' } }, -- Tiger Palm/Tiger Power
-  { '100787', { 'player.buff(125359).duration <= 2', '!target.range > 5' }}, -- Tiger Palm/Tiger Power
+  { '100787', { '!player.buff(125359)', 'target.spell(108557).range' } }, -- Tiger Palm/Tiger Power
+  { '100787', { 'player.buff(125359).duration <= 2', 'target.spell(108557).range' }}, -- Tiger Palm/Tiger Power
   
   -- Crackling Jade Lightning
   {{
   { '117952', { 'player.chi < 5', 'target.spell(117952).range', '!player.buff(139597)' }}, 
   { '117952', { 'player.chi < 5', 'target.spell(117952).range', '!player.buff(137331)' }},
-  { '117952', { 'player.chi < 5', 'target.spell(117952).range' }},
   }, '!player.moving' },
 
   }, {
@@ -124,9 +129,13 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
       }
   },
   { '115313', 'modifier.lshift', 'ground' }, -- Summon Jade Serpent Statue
+
+  { '115072', 'player.health < 80' }, -- Expel Harm
   
   { '115151', { 'lowest.health < 99', '!lowest.buff(119611)', '!lowest.range > 40' }, 'lowest' }, -- Renewing Mist
   { '115151', 'player.chi < 5' }, -- Renewing Mist
+
+  { '116670', { 'player.chi >= 2', '@coreHealing.needsHealing(60, 4)' }, nil }, -- Uplift
   
   { '115450', 'modifier.lalt', 'mouseover' }, -- Detox Mousever
 
