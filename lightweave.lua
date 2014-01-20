@@ -67,7 +67,22 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   
   -- Mouseover Healing
   {{
-  { '115175', { 'mouseover.health < 100', 'mouseover.spell(115175).range' }, 'mouseover' }, -- Soothing Mist 
+  { '!/stopcasting', 'mouseover.health = 100' },
+  { '124682', { -- Enveloping Mist 
+    'mouseover.health < 70', 
+    'mouseover.spell(124682).range', 
+    'player.chi >= 3', 
+    "player.casting(115175)"
+  }},
+  { '116694', { -- Surging Mist 
+    'mouseover.health < 85', 
+    'mouseover.spell(116694).range', 
+    'player.mana > 25', 
+    "player.casting(115175)"
+  }}, 
+  { '115175', { 'mouseover.health < 100', 
+  'mouseover.spell(115175).range' 
+  }, 'mouseover' }, -- Soothing Mist 
   }, 'toggle.mouseover' },
     
   { '115310', { -- Revival
@@ -145,6 +160,26 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   
   { '115450', 'modifier.lalt', 'mouseover' }, -- Detox Mousever
 
+  -- Mouseover Healing
+  {{
+  { '!/stopcasting', 'mouseover.health = 100' },
+  { '124682', { -- Enveloping Mist 
+    'mouseover.health < 70', 
+    'mouseover.spell(124682).range', 
+    'player.chi >= 3', 
+    "player.casting(115175)"
+  }},
+  { '116694', { -- Surging Mist 
+    'mouseover.health < 85', 
+    'mouseover.spell(116694).range', 
+    'player.mana > 25', 
+    "player.casting(115175)"
+  }}, 
+  { '115175', { 'mouseover.health < 100', 
+  'mouseover.spell(115175).range' 
+  }, 'mouseover' }, -- Soothing Mist 
+  }, 'toggle.mouseover' },
+  
 },  function()
 ProbablyEngine.toggle.create('mouseover', 'Interface\\Icons\\ability_monk_soothingmists', 'Mouseover Healing', 'Toggle Mouseover Healing For SoO')
 end)
