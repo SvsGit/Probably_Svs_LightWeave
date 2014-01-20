@@ -1,8 +1,8 @@
 -- ProbablyEngine Rotation Packager
 -- Custom Mistweaver Monk Rotation
 -- Created on Dec 31st 2013 9:16 am
--- Modified on Jan 19th 2014 5:45 pm
--- Version 1.0.4
+-- Modified on Jan 20th 2014 11:00 am
+-- Version 1.0.5
 
 ProbablyEngine.library.register('coreHealing', {
   needsHealing = function(percent, count)
@@ -53,14 +53,15 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '!108557', { 'player.buff(137331)', 'target.spell(108557).range', '!modifier.last' }}, -- Jab
   
   -- Mana management
+  { '!100784', { 'player.buff(139597)', 'target.spell(108557).range', 'modifier.multitarget' }}, -- Blackout Kick/Muscle Memory
   { '!100787', { 'player.buff(139597)', 'target.spell(100787).range' }}, -- Tiger Palm/Muscle Memory
   { '123761', { 'player.buff(115867).count >= 2', 'player.mana <= 80' }}, -- Mana Tea
   { '108557', { 'target.spell(108557).range', 'player.mana <= 25', '!modifier.last' }}, -- Jab
 
-  { '121279', 'spell.exists' }, -- Lifeblood
+  { '/run CastSpellByID(121279)', { 'player.spell(121279).exists', 'player.spell(121279).cooldown = 0' }}, -- Lifeblood, thanks Mavmins
   { '#gloves' },
-  {"#trinket1", "player.mana < 80"},
-  {"#trinket2", "player.mana < 80"},
+  { '#trinket1', 'player.mana < 80' },
+  { '#trinket2', 'player.mana < 80' },
     
   { '115080', { -- Touch of Death
     '!target.range > 5',
@@ -86,7 +87,7 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '!116670', { 'player.chi >= 2', '@coreHealing.needsHealing(70, 4)' }, nil },
   { '116670', { 'player.chi >= 5' }, nil },
   
-  { '116847', "modifier.multitarget" },  -- Rushing Jade Wind
+  { '116847', 'modifier.multitarget' },  -- Rushing Jade Wind
   
   { '123904', '@coreHealing.needsHealing(60, 4)' }, -- Invoke Xuen, the White Tiger
   
