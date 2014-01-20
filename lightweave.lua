@@ -58,7 +58,7 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '123761', { 'player.buff(115867).count >= 2', 'player.mana <= 80' }}, -- Mana Tea
   { '108557', { 'target.spell(108557).range', 'player.mana <= 25', '!modifier.last' }}, -- Jab
 
-  { '/run CastSpellByID(121279)', { 'player.spell(121279).exists', 'player.spell(121279).cooldown = 0' }}, -- Lifeblood, thanks Mavmins
+  { '121279', { 'player.spell(121279).exists', 'player.spell(121279).cooldown = 0' }, 'player' }, -- Lifeblood, thanks Mavmins and Backburn
   { '#gloves' },
   { '#trinket1', 'player.mana < 80' },
   { '#trinket2', 'player.mana < 80' },
