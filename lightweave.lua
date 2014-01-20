@@ -87,7 +87,10 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '!116670', { 'player.chi >= 2', '@coreHealing.needsHealing(70, 4)' }, nil },
   { '116670', { 'player.chi >= 5' }, nil },
   
-  { '116847', 'modifier.multitarget' },  -- Rushing Jade Wind
+  {{
+  { '116847' },  -- Rushing Jade Wind
+  { '101546' },  -- Spinning Crane Kick
+  }, 'modifier.multitarget' },
   
   { '123904', '@coreHealing.needsHealing(60, 4)' }, -- Invoke Xuen, the White Tiger
   
