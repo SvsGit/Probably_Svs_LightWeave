@@ -38,7 +38,7 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   { '!/targetenemy [noharm]', { '!target.alive', '!target.enemy', '!target.exists' }}, -- Autotarget
   
   -- Interrupt
-  { '116705', 'target.interruptAt(80)' }, -- Spear Hand Strike
+  { '116705', 'target.interruptAt(50)' }, -- Spear Hand Strike
   
   -- Defensives
   { '115203', 'player.health < 30' }, -- Fortifying Brew
@@ -67,22 +67,26 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
   
   -- Mouseover Healing
   {{
-  { '!/stopcasting', 'mouseover.health = 100' },
+  { '!/stopcasting', {
+  'mouseover.health = 100',
+  'player.casting(115175)'
+  }},
   { '124682', { -- Enveloping Mist 
     'mouseover.health < 70', 
     'mouseover.spell(124682).range', 
     'player.chi >= 3', 
-    "player.casting(115175)"
+    'player.casting(115175)'
   }},
   { '116694', { -- Surging Mist 
     'mouseover.health < 85', 
     'mouseover.spell(116694).range', 
     'player.mana > 25', 
-    "player.casting(115175)"
+    'player.casting(115175)'
   }}, 
-  { '115175', { 'mouseover.health < 100', 
+  { '115175', { -- Soothing Mist
+  'mouseover.health < 100', 
   'mouseover.spell(115175).range' 
-  }, 'mouseover' }, -- Soothing Mist 
+  }, 'mouseover' },  
   }, 'toggle.mouseover' },
     
   { '115310', { -- Revival
@@ -162,22 +166,26 @@ ProbablyEngine.rotation.register_custom(270, '|cFF32ff84Svs LightWeave', {
 
   -- Mouseover Healing
   {{
-  { '!/stopcasting', 'mouseover.health = 100' },
+  { '!/stopcasting', {
+  'mouseover.health = 100',
+  'player.casting(115175)'
+  }},
   { '124682', { -- Enveloping Mist 
     'mouseover.health < 70', 
     'mouseover.spell(124682).range', 
     'player.chi >= 3', 
-    "player.casting(115175)"
+    'player.casting(115175)'
   }},
   { '116694', { -- Surging Mist 
     'mouseover.health < 85', 
     'mouseover.spell(116694).range', 
     'player.mana > 25', 
-    "player.casting(115175)"
+    'player.casting(115175)'
   }}, 
-  { '115175', { 'mouseover.health < 100', 
+  { '115175', { -- Soothing Mist
+  'mouseover.health < 100', 
   'mouseover.spell(115175).range' 
-  }, 'mouseover' }, -- Soothing Mist 
+  }, 'mouseover' },  
   }, 'toggle.mouseover' },
   
 },  function()
